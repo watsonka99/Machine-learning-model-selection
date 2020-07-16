@@ -1,9 +1,9 @@
 from sklearn.ensemble import RandomForestClassifier
-from Classification.classification import Classification
+from model import Model
 
 
-class RandomForestClassification(Classification):
+class RandomForestClassification(Model):
 
     def __init__(self, X_train, y_train, X_test, y_test):
         super().__init__(X_train, y_train, X_test, y_test)
-        self.classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
+        self.model = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)

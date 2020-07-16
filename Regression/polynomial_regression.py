@@ -18,5 +18,3 @@ class PolynomialRegression:
         regressor.fit(X_poly, self.y_train)
         self.y_pred = regressor.predict(poly_reg.transform(self.X_test))
 
-    def r2_score(self):
-        return r2_score(self.y_test, self.y_pred)

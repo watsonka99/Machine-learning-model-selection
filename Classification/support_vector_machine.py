@@ -1,10 +1,10 @@
-from Classification.classification import Classification
+from model import Model
 from sklearn.svm import SVC
 
 
-class SupportVectorMachine(Classification):
+class SupportVectorMachine(Model):
 
     def __init__(self, X_train, y_train, X_test, y_test):
         super().__init__(X_train, y_train, X_test, y_test)
-        self.classifier = SVC(kernel = 'linear', random_state = 0)
+        self.model = SVC(kernel = 'linear', random_state = 0)
 

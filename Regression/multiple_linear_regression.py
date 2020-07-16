@@ -1,9 +1,9 @@
 from sklearn.linear_model import LinearRegression
 
-from Regression.regression import Regression
+from model import Model
 
 
-class MultipleLinearRegression(Regression):
+class MultipleLinearRegression(Model):
     def __init__(self, X_train, y_train, X_test, y_test):
         super().__init__(X_train, y_train, X_test, y_test)
-        self.regressor = LinearRegression()
+        self.model = LinearRegression()
