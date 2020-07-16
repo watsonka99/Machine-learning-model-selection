@@ -1,14 +1,12 @@
 from sklearn.metrics import r2_score
 
+from model import Model
 
-class Regression:
+
+class Regression(Model):
 
     def __init__(self, X_train, y_train, X_test, y_test):
-        self.X_train = X_train
-        self.y_train = y_train
-        self.X_test = X_test
-        self.y_test = y_test
-        self.y_pred = None
+        super().__init__(X_train, y_train, X_test, y_test)
         self.regressor = None
 
     def train(self):
