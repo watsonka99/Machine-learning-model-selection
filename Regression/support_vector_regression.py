@@ -11,7 +11,7 @@ class SupportVectorRegression:
         self.sc_y = StandardScaler()
         self.X = X
         self.y = y.reshape(len(y),1)
-        X_train, self.X_test, y_train, self.y_test = train_test_split(self.X, self.y, test_size = 0.2, random_state = 0)
+        X_train, self.X_test, y_train, self.y_test = train_test_split(self.X, self.y, test_size = 0.2)
         self.X_train = self.sc_X.fit_transform(X_train)
         self.y_train = self.sc_y.fit_transform(y_train)
 
