@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from Classification.XGboost import XGboost
 from Classification.decision_tree_classification import DecisionTreeClassification
 from Classification.k_nearest_neighbors import KNearestNeighbor
 from Classification.kernel_svm import KernelSVM
@@ -36,7 +37,8 @@ class DataProcessing:
         self.X_test_sc = sc.transform(self.X_test)
 
     def classification(self):
-        logistic_regression = LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        logistic_regression = LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc,
+                                                               self.y_test)
         logistic_regression.train()
         print(logistic_regression.accuracy_score())
 
@@ -64,6 +66,10 @@ class DataProcessing:
         support_vector_machine.train()
         print(support_vector_machine.accuracy_score())
 
+        XG_boost = XGboost(self.X_train, self.y_train, self.X_test, self.y_test)
+        XG_boost.train()
+        print(XG_boost.accuracy_score())
+
     def regression(self):
         decesion_tree = DecisionTree(self.X_train, self.y_train, self.X_test, self.y_test)
         decesion_tree.train()
@@ -87,7 +93,6 @@ class DataProcessing:
         print("Support Vector Regression         ||", SVR.r2_score())
         print("Random Forest Regression          ||", random_tree.r2_score())
         print("Decision Tree Regression          ||", decesion_tree.r2_score())
-
 
 
 if __name__ == '__main__':
