@@ -1,11 +1,14 @@
 # Importing the libraries
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+from Classification.decision_tree_classification import DecisionTreeClassification
+from Classification.k_nearest_neighbors import KNearestNeighbor
 from Classification.kernel_svm import KernelSVM
 from Classification.logistic_regression import LogisticRegressionClassification
+from Classification.naive_bayes import NaiveBayes
+from Classification.random_forest_classification import RandomForestClassification
 from Classification.support_vector_machine import SupportVectorMachine
 from Regression.decision_tree_regression import DecisionTree
 from Regression.multiple_linear_regression import MultipleLinearRegression
@@ -33,9 +36,33 @@ class DataProcessing:
         self.X_test_sc = sc.transform(self.X_test)
 
     def classification(self):
-        kernel_SVM = LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        logistic_regression = LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        logistic_regression.train()
+        print(logistic_regression.accuracy_score())
+
+        kernel_SVM = KernelSVM(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
         kernel_SVM.train()
         print(kernel_SVM.accuracy_score())
+
+        K_nearest_neighbouts = KNearestNeighbor(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        K_nearest_neighbouts.train()
+        print(K_nearest_neighbouts.accuracy_score())
+
+        decision_tree = DecisionTreeClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        decision_tree.train()
+        print(decision_tree.accuracy_score())
+
+        naive_bayes = NaiveBayes(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        naive_bayes.train()
+        print(naive_bayes.accuracy_score())
+
+        random_tree = RandomForestClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        random_tree.train()
+        print(random_tree.accuracy_score())
+
+        support_vector_machine = SupportVectorMachine(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
+        support_vector_machine.train()
+        print(support_vector_machine.accuracy_score())
 
     def regression(self):
         decesion_tree = DecisionTree(self.X_train, self.y_train, self.X_test, self.y_test)
@@ -60,6 +87,7 @@ class DataProcessing:
         print("Support Vector Regression         ||", SVR.r2_score())
         print("Random Forest Regression          ||", random_tree.r2_score())
         print("Decision Tree Regression          ||", decesion_tree.r2_score())
+
 
 
 if __name__ == '__main__':

@@ -4,7 +4,6 @@ from Classification.classification import Classification
 
 class RandomForestClassification(Classification):
 
-    def train(self):
-        classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
-        classifier.fit(self.X_train, self.y_train)
-        self.y_pred = classifier.predict(self.X_test)
+    def __init__(self, X_train, y_train, X_test, y_test):
+        super().__init__(X_train, y_train, X_test, y_test)
+        self.classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
