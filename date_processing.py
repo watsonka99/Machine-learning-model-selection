@@ -1,7 +1,8 @@
 # Importing the libraries
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
 
 from Classification.XGboost import XGboost
 from Classification.decision_tree_classification import DecisionTreeClassification
@@ -16,7 +17,6 @@ from Regression.multiple_linear_regression import MultipleLinearRegression
 from Regression.polynomial_regression import PolynomialRegression
 from Regression.random_forest_regression import RandomForestRegression
 from Regression.support_vector_regression import SupportVectorRegression
-from sklearn.preprocessing import StandardScaler
 
 
 class DataProcessing:
@@ -25,7 +25,7 @@ class DataProcessing:
         # Importing the dataset
         sc = StandardScaler()
 
-        dataset = pd.read_csv('Data.csv')
+        dataset = pd.read_csv('pd_speech_features.csv')
         self.X = dataset.iloc[:, :-1].values
         self.y = dataset.iloc[:, -1].values
 
@@ -37,38 +37,17 @@ class DataProcessing:
         self.X_test_sc = sc.transform(self.X_test)
 
     def classification(self):
-        logistic_regression = LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc,
-                                                               self.y_test)
-        logistic_regression.train()
-        print(logistic_regression.accuracy_score())
-
-        kernel_SVM = KernelSVM(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        kernel_SVM.train()
-        print(kernel_SVM.accuracy_score())
-
-        K_nearest_neighbouts = KNearestNeighbor(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        K_nearest_neighbouts.train()
-        print(K_nearest_neighbouts.accuracy_score())
-
-        decision_tree = DecisionTreeClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        decision_tree.train()
-        print(decision_tree.accuracy_score())
-
-        naive_bayes = NaiveBayes(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        naive_bayes.train()
-        print(naive_bayes.accuracy_score())
-
-        random_tree = RandomForestClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        random_tree.train()
-        print(random_tree.accuracy_score())
-
-        support_vector_machine = SupportVectorMachine(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test)
-        support_vector_machine.train()
-        print(support_vector_machine.accuracy_score())
-
-        XG_boost = XGboost(self.X_train, self.y_train, self.X_test, self.y_test)
-        XG_boost.train()
-        print(XG_boost.accuracy_score())
+        model = []
+        model.append(LogisticRegressionClassification(self.X_train_sc, self.y_train, self.X_test_sc,
+                                                               self.y_test))
+        model.append(KernelSVM(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(KNearestNeighbor(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(DecisionTreeClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(NaiveBayes(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(RandomForestClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(SupportVectorMachine(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
+        model.append(XGboost(self.X_train, self.y_train, self.X_test, self.y_test))
+        return model
 
     def regression(self):
         decesion_tree = DecisionTree(self.X_train, self.y_train, self.X_test, self.y_test)
@@ -86,15 +65,22 @@ class DataProcessing:
         polynomial_regression = PolynomialRegression(self.X_train, self.y_train, self.X_test, self.y_test)
         polynomial_regression.train()
 
-        print("Regression Type                   || R2 Score")
-        print("----------------------------------++--------------------")
-        print("Multiple Linear Regression        ||", multiple_linear_regression.r2_score())
-        print("Polynomial Regression             ||", polynomial_regression.r2_score())
-        print("Support Vector Regression         ||", SVR.r2_score())
-        print("Random Forest Regression          ||", random_tree.r2_score())
-        print("Decision Tree Regression          ||", decesion_tree.r2_score())
+    def train(self, models):
+        for model in models:
+            model.train()
+
+    def graph(self, box_plot_data):
+        plt.boxplot([model.accuracies for model in box_plot_data], patch_artist=True, labels=[model.name for model in box_plot_data])
+        plt.ylim(0.5, 1)
+        plt.xticks(rotation=90)
+        plt.show()
+
+
+
 
 
 if __name__ == '__main__':
     data = DataProcessing()
-    data.classification()
+    models = data.classification()
+    data.train(models)
+    data.graph(models)

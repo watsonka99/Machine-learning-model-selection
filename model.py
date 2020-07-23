@@ -11,10 +11,17 @@ class Model:
         self.y_test = y_test
         self.y_pred = None
         self.model = None
+        self.accuracies = None
+        self.accuracy = None
+        self.sd = None
+        self.name = None
 
     def train(self):
         self.model.fit(self.X_train, self.y_train)
         self.y_pred = self.model.predict(self.X_test)
+        self.accuracies = cross_val_score(estimator=self.model, X=self.X_train, y=self.y_train, cv=10)
+        self.accuracy = self.accuracies.mean() * 100
+        self.sd = self.accuracies.std() * 100
 
     def r2_score(self):
         return r2_score(self.y_test, self.y_pred)
@@ -25,9 +32,3 @@ class Model:
     def accuracy_score(self):
         return accuracy_score(self.y_test, self.y_pred)
 
-    def accuracy(self):
-        return cross_val_score(estimator=self.model, X=self.X_train, y=self.y_train, cv=10)
-
-
-        #print("Accuracy: {:.2f} %".format(accuracies.mean() * 100))
-        #print("Standard Deviation: {:.2f} %".format(accuracies.std() * 100))
