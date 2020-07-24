@@ -1,5 +1,5 @@
 from sklearn.tree import DecisionTreeClassifier
-from model import Model
+from Models.model import Model
 
 
 class DecisionTreeClassification(Model):

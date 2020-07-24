@@ -1,5 +1,5 @@
 from sklearn.tree import DecisionTreeRegressor
-from model import Model
+from Models.model import Model
 
 
 class DecisionTree(Model):

@@ -31,4 +31,3 @@ class Model:
 
     def accuracy_score(self):
         return accuracy_score(self.y_test, self.y_pred)
-

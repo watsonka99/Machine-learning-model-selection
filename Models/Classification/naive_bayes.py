@@ -1,4 +1,4 @@
-from model import Model
+from Models.model import Model
 from sklearn.naive_bayes import GaussianNB
 
 

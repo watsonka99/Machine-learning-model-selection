@@ -1,5 +1,5 @@
 from sklearn.ensemble import RandomForestClassifier
-from model import Model
+from Models.model import Model
 
 
 class RandomForestClassification(Model):

@@ -1,5 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
-from model import Model
+from Models.model import Model
 
 
 class KNearestNeighbor(Model):
