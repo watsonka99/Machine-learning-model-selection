@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
+from Models.Both.ANN import ANN
 from Models.Both.XGboost import XGboost
 from Models.Classification.decision_tree_classification import DecisionTreeClassification
 from Models.Classification.k_nearest_neighbors import KNearestNeighbor
@@ -47,6 +48,7 @@ class DataProcessing:
         self.model.append(RandomForestClassification(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
         self.model.append(SupportVectorMachine(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
         self.model.append(XGboost(self.X_train, self.y_train, self.X_test, self.y_test))
+  #      self.model.append(ANN(self.X_train_sc, self.y_train, self.X_test_sc, self.y_test))
 
     def regression(self):
         self.model.append(DecisionTree(self.X_train, self.y_train, self.X_test, self.y_test))
@@ -74,4 +76,4 @@ if __name__ == '__main__':
     data = DataProcessing()
     data.classification()
     data.train()
-    data.graph()
+  #  data.graph()
