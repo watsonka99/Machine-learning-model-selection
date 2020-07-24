@@ -76,4 +76,4 @@ if __name__ == '__main__':
     data = DataProcessing()
     data.classification()
     data.train()
-  #  data.graph()
+    data.graph()
